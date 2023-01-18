@@ -27,12 +27,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SQLException {
         File f = new File("datos.dat");
-         System.out.println("Antes de actualizar");
+        System.out.println("Antes de actualizar");
         consultaProductos();
         leerFicheroBinario(f);
         System.out.println("Despues de actualizar");
         consultaProductos();
-       
+
     }
 
     public static void consultaProductos() throws SQLException {
@@ -54,9 +54,9 @@ public class Main {
                 String lineaProducto = rs.getString(3);
                 int precioUnitario = rs.getInt(4);
                 int stock = rs.getInt(5);
-                
-                System.out.println("codProducto: "+ codProducto + " Nombre: "+ nombre+ " LineaProducto: "+ lineaProducto+ " precioUnitario: "+ precioUnitario + " stock: "+ stock);
-                
+
+                System.out.println("codProducto: " + codProducto + " Nombre: " + nombre + " LineaProducto: " + lineaProducto + " precioUnitario: " + precioUnitario + " stock: " + stock);
+
             }
 
         } else {
@@ -125,7 +125,8 @@ public class Main {
             int precioUnitario = dis.readInt();
             int stock = dis.readInt();
             System.out.println("Se va a dar de alta a :");
-            System.out.println("codProducto: "+ codProducto + " Nombre: "+ nombre+ " LineaProducto: "+ lineaProducto+ " precioUnitario: "+ precioUnitario + " stock: "+ stock);
+            System.out.println("codProducto: " + codProducto + " Nombre: " + nombre + " LineaProducto: " + lineaProducto
+                    + " precioUnitario: " + precioUnitario + " stock: " + stock);
 
             //comprobar si existe
             psSelect.setString(1, codProducto);
@@ -160,7 +161,7 @@ public class Main {
             System.out.println("Se ha conectado a la base datos  correctamente");
 
             String codProducto = dis.readUTF();
-            System.out.println("Se va a borrar el producto con codigo: "+ codProducto);
+            System.out.println("Se va a borrar el producto con codigo: " + codProducto);
 
             String sentencia = "DELETE FROM PRODUCTOS WHERE CodProducto=?";
             PreparedStatement psDelete = con.prepareStatement(sentencia);
@@ -187,16 +188,16 @@ public class Main {
             System.out.println("Se ha conectado a la base datos  correctamente");
 
             String codProducto = dis.readUTF();
-             System.out.println("Se va a modificar el producto con codigo: "+ codProducto);
+            System.out.println("Se va a modificar el producto con codigo: " + codProducto);
             int porcentaje = dis.readInt();
-            System.out.println("Porcentaje :"+ porcentaje);
+            System.out.println("Porcentaje :" + porcentaje);
 
             String sentencia = "UPDATE PRODUCTOS SET PrecioUnitario=PrecioUnitario+((PrecioUnitario*?)/100)  where CodProducto=?";
             PreparedStatement psUpdate = con.prepareStatement(sentencia);
-          
+
             psUpdate.setInt(1, porcentaje);
             psUpdate.setString(2, codProducto);
-  
+
             if (psUpdate.executeUpdate() == 0) {
                 System.out.println("NO se ha podido actualizar el producto");
             } else {
